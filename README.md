@@ -1,89 +1,175 @@
-# 🛍️ Ecommerce API — Primera Entrega Coderhouse Backend
+# Backend I - Coderhouse  
+## Entrega Nº2: Handlebars + WebSockets + Actualización en Tiempo Real
 
-API REST desarrollada con **Node.js + Express**, que permite gestionar productos y carritos de compra.  
-La persistencia de datos se realiza en archivos **JSON** locales (`data/products.json` y `data/carts.json`).
+Este proyecto implementa un servidor Express con motor de plantillas **Handlebars**, integración de **Socket.io** y actualización en tiempo real de la lista de productos.
+
+La aplicación permite:
+
+- Visualizar productos desde archivos JSON  
+- Renderizar vistas con Handlebars  
+- Crear y eliminar productos  
+- Actualizar la vista automáticamente mediante WebSockets  
+- Mantener persistencia en archivos dentro de `/data`
 
 ---
 
-## 🚀 Instalación y ejecución
+## 📁 Estructura del proyecto
 
-1. Clonar el repositorio:
-   ```bash
-   git clone https://github.com/Micaelarombola/ecommerce-api-coderhouse.git
-   cd ecommerce-api-coderhouse
+BACKEND I/
+│ app.js
+│ package.json
+│ README.md
+│
+├── data
+│ ├── products.json
+│ └── carts.json
+│
+├── public
+│ └── js
+│ └── realtime.js
+│
+└── src
+├── managers
+│ ├── ProductManager.js
+│ └── CartManager.js
+│
+├── routes
+│ ├── products.router.js
+│ └── carts.router.js
+│
+└── views
+├── home.handlebars
+├── realTimeProducts.handlebars
+└── layouts
+└── main.handlebars
 
-Instalar dependencias:
 
+---
+
+## 🚀 Instalación
+
+2.  Instalar dependencias:
+```bash
 npm install
 
+Instalar Handlebars:
 
-Ejecutar el servidor:
+npm install express-handlebars
+
+3. Instalar Socket.io:
+npm install socket.io
+
+
+4. Ejecutar el servidor:
 
 node app.js
 
+El servidor corre en:
+👉 http://localhost:8080
 
-El servidor se inicia en http://localhost:8080
+🖥️ Vistas del proyecto
+1. Home (vista normal)
 
-🧱 Endpoints
-🔹 Productos /api/products
-Método	Endpoint	Descripción
-GET	/api/products	Lista todos los productos
-GET	/api/products/:pid	Devuelve un producto por su ID
-POST	/api/products	Crea un nuevo producto
-PUT	/api/products/:pid	Actualiza un producto existente
-DELETE	/api/products/:pid	Elimina un producto
+Ruta:
 
-📦 Ejemplo de creación (POST /api/products)
-Body (JSON):
+GET http://localhost:8080/
 
-{
-  "title": "Remera azul",
-  "description": "Remera de algodón",
-  "code": "R001",
-  "price": 2500,
-  "status": true,
-  "stock": 15,
-  "category": "Ropa",
-  "thumbnails": ["imagen1.jpg"]
-}
+2. RealTimeProducts (vista con WebSockets)
 
-🛒 Carritos /api/carts
-Método	Endpoint	Descripción
-POST	/api/carts	Crea un nuevo carrito
-GET	/api/carts/:cid	Lista los productos de un carrito
-POST	/api/carts/:cid/product/:pid	Agrega un producto al carrito (incrementa cantidad si ya existe)
+Ruta:
 
-📦 Ejemplo de agregar producto al carrito
-POST /api/carts/1/product/1
+GET http://localhost:8080/realtimeproducts
 
-{ "quantity": 2 }
+Incluye:
 
-📂 Estructura del proyecto
-ecommerce-api/
-├─ data/
-│  ├─ carts.json
-│  └─ products.json
-├─ src/
-│  ├─ managers/
-│  │  ├─ ProductManager.js
-│  │  └─ CartManager.js
-│  └─ routes/
-│     ├─ products.router.js
-│     └─ carts.router.js
-├─ app.js
-├─ package.json
-├─ .gitignore
-└─ README.md
+Lista de productos que se actualiza en tiempo real
 
-✅ Tecnologías
+Formulario para crear productos
+
+Formulario para eliminar productos
+
+Comunicación vía Socket.io
+
+Cuando se crea o elimina un producto:
+
+✔ Se escribe en products.json
+✔ Se emite un evento WebSocket
+✔ La lista se actualiza automáticamente sin recargar la página
+
+🧠 Lógica WebSocket (Socket.io)
+
+En app.js, el servidor emite:
+
+products → para enviar la lista actualizada
+
+errorMessage → para manejar errores
+
+newProduct → para crear productos desde WebSocket
+
+deleteProduct → para eliminar productos
+
+El cliente escucha y modifica el DOM en:
+
+public/js/realtime.js
+
+📦 API REST (Primera entrega integrada)
+Productos (/api/products)
+
+✔ GET todos
+✔ GET por ID
+✔ POST crear
+✔ PUT actualizar
+✔ DELETE eliminar
+
+Carritos (/api/carts)
+
+✔ POST crear carrito
+✔ GET ver productos del carrito
+✔ POST agregar productos al carrito
+
+Toda la persistencia se maneja mediante archivos JSON.
+
+📝 Tecnologías utilizadas
 
 Node.js
 
 Express
 
-File System (fs)
+Handlebars
 
-Postman (para pruebas)
+Socket.io
 
-Autor: Micaela Rombola
-Curso: Coderhouse Backend — Primera Entrega
+JavaScript
+
+JSON para persistencia
+
+✔ Estado del proyecto
+
+Entrega Nº2 completa y funcional.
+
+Handlebars OK
+
+WebSockets OK
+
+Listas dinámicas OK
+
+Formularios funcionando
+
+Persistencia en JSON
+
+Estructura limpia y ordenada
+
+Autor
+
+Proyecto desarrollado por Nicolás Pombo para el curso Backend I - Coderhouse.
+
+
+---
+
+# 🔥 Si querés, también te preparo:
+✅ Un ZIP limpio para entregar  
+✅ Un video cortito explicando cómo funciona  
+✅ Una versión del README con capturas de pantalla  
+
+¿Querés que arme el ZIP de entrega?
+
